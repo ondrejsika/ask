@@ -16,6 +16,12 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # lib
+    'smart_selects',
+
+    # project
+    'ask',
 )
 
 MIDDLEWARE_CLASSES = (
