@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block container %}
+    <form method="post">
+        {% csrf_token %}
+        {% include 'form.html' %}
+        <input type="submit" value="{% trans 'Přihlásit se' %}">
+    </form>
+    <p style="margin-top: 10px"><a href="{% url 'password_reset' %}">{% trans 'Obnovit heslo' %}</a></p>
+{% endblock container %}

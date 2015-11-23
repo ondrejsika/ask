@@ -1,0 +1,22 @@
+{% load i18n %}
+
+<div class="djangoform">
+{% for field in form %}
+    <div class="row">
+        <div class="col-xs-2 form-label">
+           <span>{{ field.label|safe }}</span>
+        </div>
+        <div class="col-xs-5">
+            {{ field|safe }}
+            {% if field.help_text|safe %}
+                <p class="form-help">{{ field.help_text|safe }}</p>
+            {% endif %}
+            {% if field.errors %}
+                <div class="form-error">
+                    {{ field.errors|safe }}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endfor %}
+</div>

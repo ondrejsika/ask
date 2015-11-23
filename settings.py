@@ -47,6 +47,7 @@ TEMPLATES = [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
+                'django.core.context_processors.static',
                 'django.contrib.messages.context_processors.messages',
             ],
         },
@@ -70,6 +71,12 @@ USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
-STATIC_URL = '/static/'
+STATIC_URL = '/static/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static', 'static')
+
+MEDIA_URL = '/static/uploads/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'static', 'uploads')
+
+LOGIN_URL = '/login/'
+LOGIN_REDIRECT_URL = '/'
 

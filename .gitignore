@@ -1,5 +1,5 @@
 # Project
-static
+/static
 *.sqlite3
 
 # Python

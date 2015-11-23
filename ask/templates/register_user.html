@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block container %}
+    <form method="post">
+        {% csrf_token %}
+        {% include 'form.html' %}
+        <input type="submit" value="{% trans 'Registrovat se' %}">
+    </form>
+{% endblock container %}
