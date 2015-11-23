@@ -16,6 +16,9 @@ class Question(models.Model):
     question = models.TextField()
     allow_user_answer = models.BooleanField(default=True)
 
+    class Meta:
+        unique_together = ('poll', 'question')
+
     def __unicode__(self):
         return u'poll #%s %s' % (self.poll_id, self.question[:20])
 
@@ -30,6 +33,9 @@ class Answer(models.Model):
     )
     answer = models.TextField()
 
+    class Meta:
+        unique_together = ('poll', 'question', 'answer')
+
     def __unicode__(self):
         return u'poll #%s %s: %s' % (self.poll_id, self.question.question[:20], self.answer[:20])
 
@@ -39,6 +45,9 @@ class UserAnswer(models.Model):
     poll = models.ForeignKey(Poll)
     question = models.ForeignKey(Question)
     answer = models.TextField()
+
+    class Meta:
+        unique_together = ('user', 'poll', 'question', 'answer')
 
     def __unicode__(self):
         return u'answer (%s): poll #%s %s: %s' % (self.user_id, self.poll_id, self.question.question[:20], self.answer[:20])
@@ -56,7 +65,7 @@ class Payout(models.Model):
 class Profile(models.Model):
     user = models.OneToOneField('auth.User')
 
-    completed_polls = models.ManyToManyField(Poll)
+    completed_polls = models.ManyToManyField(Poll, blank=True)
 
     def __unicode__(self):
         return u'profile %s %s (%s)' % (self.user, self.user_id, self.get_balance())

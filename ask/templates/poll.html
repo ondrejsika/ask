@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block container %}
+    {{ question.question }}
+    {% for answer in question.answer_set.all %}
+        <a href="{% url 'answer' poll.id question.id %}?next={% url 'poll' poll.id %}&answer={{ answer.answer }}">{{ answer.answer }}</a>
+    {% endfor %}
+    <form action="{% url 'answer' poll.id question.id %}">
+        <input type="hidden" name="next" value="{% url 'poll' poll.id %}">
+        <input type="text" name="answer">
+        <input type="submit">
+    </form>
+{% endblock container %}

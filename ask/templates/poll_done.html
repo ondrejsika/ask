@@ -2,6 +2,6 @@
 {% load i18n %}
 {% block container %}
     {% for poll in unanwered_polls %}
-        <a href="{% url 'poll' poll.id %}">{{ poll }}</a>
+        {{ poll }}
     {% endfor %}
 {% endblock container %}
