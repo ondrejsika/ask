@@ -4,6 +4,7 @@ from smart_selects.db_fields import ChainedForeignKey
 
 class Poll(models.Model):
     name = models.CharField(max_length=128)
+    reward = models.IntegerField()
 
     def __unicode__(self):
         return u'poll #%s %s' % (self.id, self.name[:20])
@@ -41,3 +42,26 @@ class UserAnswer(models.Model):
 
     def __unicode__(self):
         return u'answer (%s): poll #%s %s: %s' % (self.user_id, self.poll_id, self.question.question[:20], self.answer[:20])
+
+
+class Payout(models.Model):
+    user = models.ForeignKey('auth.User')
+    amount = models.IntegerField()
+    timestamp_dt = models.DateTimeField(auto_now_add=True)
+
+    def __unicode__(self):
+        return u'payout %s %s %s' % (self.user, self.amount, self.timestamp_dt)
+
+
+class Profile(models.Model):
+    user = models.OneToOneField('auth.User')
+
+    completed_polls = models.ManyToManyField(Poll)
+
+    def __unicode__(self):
+        return u'profile %s %s (%s)' % (self.user, self.user_id, self.get_balance())
+
+    def get_balance(self):
+        sum_rewards = self.completed_polls.all().aggregate(models.Sum('reward'))['reward__sum'] or 0
+        sum_payouts = Payout.objects.filter(user=self.user).aggregate(models.Sum('amount'))['amount__sum'] or 0
+        return sum_rewards - sum_payouts
