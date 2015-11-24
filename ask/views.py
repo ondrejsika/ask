@@ -7,13 +7,14 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 
 # django contrib
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
 from django.contrib.auth.decorators import login_required
 
 # libs
 
 # project
 from ask.models import Poll, Question, UserAnswer, Payout
+from ask.forms import ProfileForm
 
 
 @login_required
@@ -73,6 +74,26 @@ def payouts_view(request):
 
     return render(request, 'payouts.html', {
         'payouts': payouts,
+    })
+
+@login_required
+def settings_view(request):
+    data = request.POST if request.POST.get('form') == 'profile_form' else None
+    profile_form = ProfileForm(data, instance=request.user.profile)
+    if profile_form.is_valid():
+        profile_form.save()
+        return HttpResponseRedirect(reverse('settings')+'?msg=Ulozeno')
+
+    data = request.POST if request.POST.get('form') == 'password_change_form' else None
+    password_change_form = PasswordChangeForm(request.user, data)
+    if password_change_form.is_valid():
+        password_change_form.save()
+        return HttpResponseRedirect(reverse('settings')+'?msg=Nastaveno')
+
+    return render(request, 'settings.html', {
+        'msg': request.GET.get('msg'),
+        'profile_form': profile_form,
+        'password_change_form': password_change_form,
     })
 
 

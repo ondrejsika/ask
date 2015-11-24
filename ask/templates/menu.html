@@ -15,9 +15,7 @@
             <ul class="nav navbar-nav">
                 <li><a href="{% url 'home' %}">{% trans 'Home' %}</a></li>
                 <li><a href="{% url 'payouts' %}">{% trans 'Vyplaty' %}</a></li>
-{#                <li><a href="{% url 'my_cars' %}">{% trans 'Moje auta' %}</a></li>#}
-{#                <li><a href="{% url 'my_stared_cars' %}">{% trans 'Moje oblíbená auta' %}</a></li>#}
-{#                <li class="active"><a href="#">Home</a></li>#}
+                <li><a href="{% url 'settings' %}">{% trans 'Nastaveni' %}</a></li>
                 {% if request.user.is_authenticated %}
                     <li><a href="{% url 'logout' %}"><b>{{ request.user.username }}</b> {% trans 'Odhlásit' %}</a></li>
                 {% else %}

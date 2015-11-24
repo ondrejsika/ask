@@ -67,6 +67,9 @@ class Profile(models.Model):
 
     completed_polls = models.ManyToManyField(Poll, blank=True)
 
+    email = models.EmailField(null=True, blank=True)
+    bank_account = models.CharField(max_length=32, null=True, blank=True)
+
     def __unicode__(self):
         return u'profile %s %s (%s)' % (self.user, self.user_id, self.get_balance())
 
