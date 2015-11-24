@@ -1,7 +1,23 @@
 {% extends 'base.html' %}
 {% load i18n %}
 {% block container %}
-    {% for poll in unanwered_polls %}
-        <a href="{% url 'poll' poll.id %}">{{ poll }}</a>
-    {% endfor %}
+    <div class="panel panel-default">
+      <div class="panel-body">
+        Aktualni odmena je <b>{{ request.user.profile.get_balance }} CZK</b>
+      </div>
+    </div>
+    <h2>Dostupne ankety</h2>
+    {% if unanwered_polls %}
+        <table class="table">
+            {% for poll in unanwered_polls %}
+                <tr>
+                    <td>
+                        <b>{{ poll.name }}</b>&nbsp;<a href="{% url 'poll' poll.id %}" class="btn btn-success">Zacit</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>Zadne dostupne ankety</p>
+    {% endif %}
 {% endblock container %}

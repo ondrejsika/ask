@@ -1,13 +1,25 @@
 {% extends 'base.html' %}
 {% load i18n %}
 {% block container %}
-    {{ question.question }}
-    {% for answer in question.answer_set.all %}
-        <a href="{% url 'answer' poll.id question.id %}?next={% url 'poll' poll.id %}&answer={{ answer.answer }}">{{ answer.answer }}</a>
-    {% endfor %}
-    <form action="{% url 'answer' poll.id question.id %}">
-        <input type="hidden" name="next" value="{% url 'poll' poll.id %}">
-        <input type="text" name="answer">
-        <input type="submit">
-    </form>
+    {{ poll.name }}
+    <p><b>{{ question.question }}</b></p>
+    <table class="table">
+        {% for answer in question.answer_set.all %}
+            <tr>
+                <td>
+                    <b>{{ answer.answer }}</b>&nbsp;
+                    <a class="btn btn-success" href="{% url 'answer' poll.id question.id %}?next={% url 'poll' poll.id %}&answer={{ answer.answer }}">>></a>
+                </td>
+            </tr>
+        {% endfor %}
+        <tr>
+            <td>
+                <form class="form-horizontal" action="{% url 'answer' poll.id question.id %}">
+                    <input type="hidden" name="next" value="{% url 'poll' poll.id %}">
+                    <input type="text" name="answer">
+                    <input type="submit" value=">>" class="btn btn-success">
+                </form>
+            </td>
+        </tr>
+    </table>
 {% endblock container %}
