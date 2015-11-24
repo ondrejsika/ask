@@ -24,4 +24,5 @@ urlpatterns = (
     url(r'^poll/(?P<poll_id>\d+)/(?P<question_id>\d+)/$', 'ask.views.poll_view', name='poll_question'),
     url(r'^answer/(?P<poll_id>\d+)/(?P<question_id>\d+)/$', 'ask.views.answer_process', name='answer'),
     url(r'^poll/(?P<poll_id>\d+)/done/$', 'ask.views.poll_done_view', name='poll_done'),
+    url(r'^payouts/$', 'ask.views.payouts_view', name='payouts'),
 )

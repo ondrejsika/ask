@@ -13,7 +13,7 @@ from django.contrib.auth.decorators import login_required
 # libs
 
 # project
-from ask.models import Poll, Question, UserAnswer
+from ask.models import Poll, Question, UserAnswer, Payout
 
 
 @login_required
@@ -64,6 +64,15 @@ def poll_done_view(request, poll_id):
 
     return render(request, 'poll_done.html', {
         'poll': poll,
+    })
+
+
+@login_required
+def payouts_view(request):
+    payouts = Payout.objects.filter(user=request.user)
+
+    return render(request, 'payouts.html', {
+        'payouts': payouts,
     })
 
 

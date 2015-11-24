@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block container %}
+    <div class="panel panel-default">
+      <div class="panel-body">
+        Aktualni odmena je <b>{{ request.user.profile.get_balance }} CZK</b>
+      </div>
+    </div>
+    <h2>Vyplaty</h2>
+    {% if payouts %}
+        <table class="table">
+            <tr>
+                <th>Datum</th>
+                <th>Castka</th>
+            </tr>
+            {% for payout in payouts %}
+                <tr>
+                    <td>{{ payout.timestamp_dt }}</td>
+                    <td>{{ payout.amount }} CZK</td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>Zatim nebyli provedeny zadne vyplaty</p>
+    {% endif %}
+{% endblock container %}
