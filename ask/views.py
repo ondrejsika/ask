@@ -13,7 +13,7 @@ from django.contrib.auth.decorators import login_required
 # libs
 
 # project
-from ask.models import Poll, Question, UserAnswer, Payout
+from ask.models import Poll, Question, UserAnswer, Payout, Profile
 from ask.forms import ProfileForm
 
 
@@ -100,7 +100,8 @@ def settings_view(request):
 def register_user(request):
     form = UserCreationForm(request.POST or None)
     if form.is_valid():
-        form.save()
+        user = form.save()
+        Profile(user=user).save()
         return HttpResponseRedirect(reverse('register_done'))
     return render(request, 'register_user.html', {
         'form': form,
